@@ -1,7 +1,8 @@
-version: "3.9"
+# the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion
+#version: "3.9"
 
 services:
-  app:
+  app: # this is the name of the service which we call via docker-compose like: docker-compose run --rm APP sh -c "python manage.py test"
     build:
       context: .
       args:
@@ -12,3 +13,22 @@ services:
       - ./app:/app
     command: >
       sh -c "python manage.py runserver 0.0.0.0:8000"
+    environment:
+      - DB_HOST=db # the name of the database service defined below
+      - POSTGRES_DB=devdb
+      - POSTGRES_USER=devuser
+      - POSTGRES_PASSWORD=changeme
+    depends_on:
+      - db # the name of the database service defined below
+
+  db:
+    image: postgres:13-alpine
+    volumes:
+      - deb-db-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=devdb
+      - POSTGRES_USER=devuser
+      - POSTGRES_PASSWORD=changeme
+
+volumes:
+  deb-db-data:
