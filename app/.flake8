@@ -1,4 +1,5 @@
 [flake8]
+use-flake8-tabs = true
 exclude =
   migrations,
   __pycache__,
