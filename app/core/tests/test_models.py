@@ -1,7 +1,7 @@
 """
 Tests for models
 """
-from random import sample
+from random import sample # noqa
 
 from django.test import TestCase
 from django.contrib.auth import get_user_model
