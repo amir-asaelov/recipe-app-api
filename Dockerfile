@@ -13,14 +13,14 @@ ARG DEV=false
 RUN python -m venv /py && \
     /py/bin/pip install --upgrade pip && \
     sed -i 's/https/http/' /etc/apk/repositories && \
-		apk add --update --no-cache postgresql-client && \
-		apk add --update --no-cache --virtual .tmp-build-deps \
-				build-base postgresql-dev musl-dev && \
+    apk add --update --no-cache postgresql-client && \
+    apk add --update --no-cache --virtual .tmp-build-deps \
+      build-base postgresql-dev musl-dev && \
     /py/bin/pip install -r /tmp/requirements.txt && \
     if [ $DEV = "true" ]; \
     then \
-    		/py/bin/pip install -r /tmp/requirements.dev.txt ; \
-    		apk add --no-cache bash; \
+        /py/bin/pip install -r /tmp/requirements.dev.txt ; \
+        apk add --no-cache bash; \
     fi && \
     rm -rf /tmp && \
     apk del .tmp-build-deps && \
